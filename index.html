@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Upcoming Market Form</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    body {
+      background: linear-gradient(to bottom right, #fbc3ec, #f472b6);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+    .glass {
+      background: rgba(255, 255, 255, 0.6);
+      backdrop-filter: blur(15px);
+      -webkit-backdrop-filter: blur(15px);
+      border-radius: 15px;
+      padding: 30px;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+      width: 700px;
+      height: 85vh;
+      overflow-y: auto;
+      overflow-x: hidden;
+    }
+    label {
+      font-weight: bold;
+      color: #333;
+    }
+	.submit-btn {
+	  background: linear-gradient(to right, #f9a8d4, #ec4899);
+	  padding: 14px 28px;
+	  border: none;
+	  border-radius: 9999px; /* pill shape */
+	  font-size: 18px;
+	  font-weight: bold;
+	  color: white;
+	  cursor: pointer;
+	  transition: transform 0.2s ease, box-shadow 0.2s ease;
+	  min-width: 120px;
+	}
+
+	.submit-btn:hover {
+	  transform: translateY(-2px);
+	  box-shadow: 0 4px 14px rgba(236, 72, 153, 0.4);
+	}
+
+  </style>
+</head>
+<body>
+  <div class="glass p-6">
+    <h2 class="text-2xl font-bold text-center mb-4 text-gray-900">Upcoming Market Form</h2>
+    <form>
+      <div class="mb-4">
+        <label>Vendor Business Name</label>
+        <input type="text" class="w-full p-2 border rounded bg-white" />
+      </div>
+      <div class="mb-4">
+        <label>Vendor ID <span class="text-red-500">*</span></label>
+        <input type="text" class="w-full p-2 border rounded bg-white" required />
+      </div>
+	  <div class="mb-4">
+        <label>Vendor Type</label>
+        <select id="vendorType" class="w-full p-2 border rounded bg-white" onchange="toggleProduceFields()">
+          <option value="">- Select -</option>
+          <option value="Farmer">Farmer</option>
+          <option value="Hot Food Vendor">Hot Food Vendor</option>
+          <option value="Value Added Producer">Value Added Producer</option>
+          <option value="Entertainer">Entertainer</option>
+          <option value="Educator">Educator</option>
+        </select>
+      </div>
+      <div class="mb-4">
+        <label>Will you be attending the upcoming market on <u>__DATE__</u>? <span class="text-red-500">*</span></label>
+        <select class="w-full p-2 border rounded bg-white" required>
+          <option value="">- Select -</option>
+          <option value="Yes">Yes</option>
+          <option value="No">No</option>
+        </select>
+      </div>
+      <div id="produceSection" class="hidden mb-4">
+		<label>Produce Item, Quantity</label>
+        <div id="produceContainer">
+          <!-- Default visible card -->
+          <div class="border p-4 rounded-lg bg-white shadow-md mb-3">
+            <div class="mb-2">
+              <label class="block mb-1">Produce item you will be bringing to the market:</label>
+              <select class="w-full p-2 border rounded bg-white">
+                <option value="">- Select Crop -</option>
+                <option>Tomatoes</option>
+                <option>Carrots</option>
+                <option>Lettuce</option>
+                <option>Peppers</option>
+                <option>Beans</option>
+                <option>Onions</option>
+                <option>Potatoes</option>
+              </select>
+            </div>
+            <div class="mb-2 flex gap-4 items-end">
+              <div class="flex-1">
+                <label class="block mb-1">Quantity</label>
+                <input type="number" class="w-full p-2 border rounded bg-white" placeholder="e.g., 10" />
+              </div>
+              <div>
+                <label class="block mb-1">Units</label>
+                <select class="p-2 border rounded bg-white">
+                  <option>lbs</option>
+                  <option>counts</option>
+                  <option>bunches</option>
+                </select>
+              </div>
+            </div>
+          </div>
+        </div>
+        <button type="button" onclick="addProduceItem()" class="mt-2 text-sm bg-pink-500 text-white px-4 py-2 rounded-full hover:bg-pink-600">Add Produce</button>
+      </div>
+      <div class="mb-4">
+        <label>Other food items? <span class="text-red-500">*</span></label>
+        <select id="otherFood" class="w-full p-2 border rounded bg-white" onchange="toggleFoodItems()">
+          <option value="">- Select -</option>
+          <option value="Yes">Yes</option>
+          <option value="No">No</option>
+        </select>
+      </div>
+      <div class="mb-4 hidden" id="foodItems">
+        <label>If yes, select all that apply:</label>
+        <div class="space-y-2">
+          <label><input type="checkbox" class="mr-2" />Eggs</label><br />
+          <label><input type="checkbox" class="mr-2" />Chicken</label><br />
+          <label><input type="checkbox" class="mr-2" />Pork</label><br />
+          <label><input type="checkbox" class="mr-2" />Beef</label><br />
+          <label><input type="checkbox" class="mr-2" />Lamb</label><br />
+          <label><input type="checkbox" class="mr-2" />Fish</label><br />
+          <label><input type="checkbox" class="mr-2" />Baked goods</label><br />
+          <label><input type="checkbox" class="mr-2" />Other: <input type="text" class="p-1 border rounded bg-white ml-2" /></label>
+        </div>
+      </div>
+      <div class="mb-4">
+        <label>Are you currently renting equipment from PGL? <span class="text-red-500">*</span></label>
+        <select class="w-full p-2 border rounded bg-white" required>
+          <option value="">- Select -</option>
+          <option value="Yes">Yes</option>
+          <option value="No">No</option>
+        </select>
+      </div>
+      <div class="mb-4">
+        <label>Estimated arrival time for set up:</label>
+        <input type="time" class="w-full p-2 border rounded bg-white" />
+        <p class="text-sm text-gray-600 mt-1">(All vendors are required to arrive and check-in between 11 and 12:30 on market day. If you arrive after this time, you may be asked to leave.)</p>
+      </div>
+      <div class="mb-4">
+        <label>Is there anything else that you want to share?</label>
+        <textarea class="w-full p-2 border rounded bg-white" rows="3"></textarea>
+      </div>
+      <div class="text-center">
+        <button type="submit" class="submit-btn">Submit</button>
+      </div>
+    </form>
+  </div>
+  <script>
+    function toggleFoodItems() {
+      const otherFood = document.getElementById('otherFood');
+      const foodItems = document.getElementById('foodItems');
+      foodItems.classList.toggle('hidden', otherFood.value !== 'Yes');
+    }
+	
+	function toggleProduceFields() {
+      const vendorType = document.getElementById('vendorType').value;
+      const produceSection = document.getElementById('produceSection');
+      produceSection.classList.toggle('hidden', vendorType !== 'Farmer');
+    }
+
+    function addProduceItem() {
+      const container = document.getElementById('produceContainer');
+      const card = document.createElement('div');
+      card.className = 'border p-4 rounded-lg bg-white shadow-md mb-3';
+
+      card.innerHTML = `
+        <div class="mb-2">
+          <label class="block mb-1">Produce item you will be bringing to the market:</label>
+          <select class="w-full p-2 border rounded bg-white">
+            <option value="">- Select Crop -</option>
+            <option>Tomatoes</option>
+            <option>Carrots</option>
+            <option>Lettuce</option>
+            <option>Peppers</option>
+            <option>Beans</option>
+            <option>Onions</option>
+            <option>Potatoes</option>
+          </select>
+        </div>
+        <div class="mb-2 flex gap-4 items-end">
+          <div class="flex-1">
+            <label class="block mb-1">Quantity</label>
+            <input type="number" class="w-full p-2 border rounded bg-white" placeholder="e.g., 10" />
+          </div>
+          <div>
+            <label class="block mb-1">Units</label>
+            <select class="p-2 border rounded bg-white">
+              <option>lbs</option>
+              <option>counts</option>
+              <option>bunches</option>
+            </select>
+          </div>
+        </div>
+        <button type="button" class="text-red-500 text-sm mt-1" onclick="this.parentElement.remove()">Remove</button>
+      `;
+
+      container.appendChild(card);
+    }
+  </script>
+</body>
+</html>
