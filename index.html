@@ -51,15 +51,15 @@
 <body>
   <div class="glass p-6">
     <h2 class="text-2xl font-bold text-center mb-4 text-gray-900">Upcoming Market Form</h2>
-    <form>
+    <form id="upcomingMarketForm" onsubmit="storeData(event)">
 	  <div class="mb-4">
         <label>Vendor PIN <span class="text-red-500">*</span></label>
-        <input type="text" id="vendorPin" class="w-full p-2 border rounded bg-white" required onchange="fetchVendorId()"/>
+        <input type="text" id="vendorPin" name="vendorPin" class="w-full p-2 border rounded bg-white" required onchange="fetchVendorId()"/>
       </div>
       <div class="mb-4">
         <label>Vendor ID <span class="text-red-500">*</span></label>
 		<div class="relative">
-			<input type="text" id="vendorId" class="w-full p-2 border rounded bg-white" readonly data-error="Vendor PIN not found. Please check and try again."/>
+			<input type="text" id="vendorId" name="vendorId" class="w-full p-2 border rounded bg-white" readonly data-error="Vendor PIN not found. Please check and try again."/>
 			<div id="vendorSpinner" class="absolute right-3 top-2.5 hidden">
 		      <svg class="animate-spin h-5 w-5 text-blue-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
 		        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
@@ -70,11 +70,11 @@
       </div>
       <div class="mb-4">
         <label>Vendor Business Name</label>
-        <input type="text" class="w-full p-2 border rounded bg-white" />
+        <input type="text" id="vendorName" name="vendorName" class="w-full p-2 border rounded bg-white" />
       </div>
       <div class="mb-4">
         <label>Vendor Type</label>
-        <select id="vendorType" class="w-full p-2 border rounded bg-white" onchange="toggleProduceFields()" readonly>
+        <select id="vendorType" name="vendorType" class="w-full p-2 border rounded bg-white" onchange="toggleProduceFields()" readonly>
           <option value="">- Select -</option>
           <option value="Farmer">Farmer</option>
           <option value="Hot Food Vendor">Hot Food Vendor</option>
@@ -85,7 +85,7 @@
       </div>
       <div class="mb-4">
         <label id="attendanceLabel">Will you be attending the upcoming market on <b id="nextMarketDate"></b>? <span class="text-red-500">*</span></label>
-        <select class="w-full p-2 border rounded bg-white" id="attendance" onchange="handleAttendanceChange()" required>
+        <select class="w-full p-2 border rounded bg-white" id="attendance" name="attendance" onchange="handleAttendanceChange()" required>
           <option value="">- Select -</option>
           <option value="Yes">Yes</option>
           <option value="No">No</option>
@@ -93,7 +93,7 @@
       </div>
       <div id="absenceReasonDiv" class="mb-4 hidden">
         <label>Please explain the reason for your absence</label>
-        <textarea class="w-full p-2 border rounded bg-white"></textarea>
+        <textarea id="absenceReason" name="absenceReason" class="w-full p-2 border rounded bg-white"></textarea>
       </div>
       <div id="conditionalFields">
         <div id="produceSection" class="hidden mb-4">
@@ -103,7 +103,7 @@
         </div>
         <div class="mb-4">
           <label>Other food items? <span class="text-red-500">*</span></label>
-          <select id="otherFood" class="w-full p-2 border rounded bg-white" onchange="toggleFoodItems()">
+          <select id="otherFood" name="otherFood" class="w-full p-2 border rounded bg-white" onchange="toggleFoodItems()">
             <option value="">- Select -</option>
             <option value="Yes">Yes</option>
             <option value="No">No</option>
@@ -112,20 +112,20 @@
         <div class="mb-4 hidden" id="foodItems">
           <label>If yes, select all that apply:</label>
           <div class="space-y-2">
-            <label><input type="checkbox" class="mr-2" />Honey</label><br />
-            <label><input type="checkbox" class="mr-2" />Eggs</label><br />
-            <label><input type="checkbox" class="mr-2" />Chicken</label><br />
-            <label><input type="checkbox" class="mr-2" />Pork</label><br />
-            <label><input type="checkbox" class="mr-2" />Beef</label><br />
-            <label><input type="checkbox" class="mr-2" />Lamb</label><br />
-            <label><input type="checkbox" class="mr-2" />Fish</label><br />
-            <label><input type="checkbox" class="mr-2" />Baked goods</label><br />
-            <label><input type="checkbox" class="mr-2" />Other: <input type="text" class="p-1 border rounded bg-white ml-2" /></label>
+            <label><input type="checkbox" name="foodItems" value="Honey" class="mr-2" />Honey</label><br />
+            <label><input type="checkbox" name="foodItems" value="Eggs" class="mr-2" />Eggs</label><br />
+            <label><input type="checkbox" name="foodItems" value="Chicken" class="mr-2" />Chicken</label><br />
+            <label><input type="checkbox" name="foodItems" value="Pork" class="mr-2" />Pork</label><br />
+            <label><input type="checkbox" name="foodItems" value="Beef" class="mr-2" />Beef</label><br />
+            <label><input type="checkbox" name="foodItems" value="Lamb" class="mr-2" />Lamb</label><br />
+            <label><input type="checkbox" name="foodItems" value="Fish" class="mr-2" />Fish</label><br />
+            <label><input type="checkbox" name="foodItems" value="Baked goods" class="mr-2" />Baked goods</label><br />
+            <label><input type="checkbox" name="foodItems" value="Other" class="mr-2" />Other: <input type="text" id="otherFoodItem" class="p-1 border rounded bg-white ml-2" /></label>
           </div>
         </div>
         <div class="mb-4">
           <label>Will you be renting equipment from PGL? <span class="text-red-500">*</span></label>
-          <select class="w-full p-2 border rounded bg-white" required>
+          <select id="rentEquip" name="rentEquip" class="w-full p-2 border rounded bg-white" required>
             <option value="">- Select -</option>
             <option value="Yes">Yes</option>
             <option value="No">No</option>
@@ -133,12 +133,12 @@
         </div>
         <div class="mb-4">
           <label>Estimated arrival time for set up:</label>
-          <input type="time" step="900" class="w-full p-2 border rounded bg-white" />
+          <input type="time" id="arrivalTime" name="arrivalTime" step="900" class="w-full p-2 border rounded bg-white" />
           <p class="text-sm text-gray-600 mt-1">(Vendors are required to arrive and check-in between 11 and 12:45 on market day. Late arrivals may be asked to leave.)</p>
         </div>
         <div class="mb-4">
           <label>Is there anything else that you want to share?</label>
-          <textarea class="w-full p-2 border rounded bg-white" rows="3"></textarea>
+          <textarea class="w-full p-2 border rounded bg-white" id="comments" name="comments" rows="3"></textarea>
         </div>
       </div>
       <div class="text-center">
@@ -202,10 +202,11 @@
   
   function fetchVendorId() {
 		const vendorPin = document.getElementById('vendorPin').value;
-		const scriptUrl = 'https://script.google.com/macros/s/AKfycbwKCYixH72uLYPc0FCkglt9OM_KoApZSlHOC0NM2vytN91EM4Vo_PqFfWOZtje4TarvPw/exec';
+		const scriptUrl = 'https://script.google.com/macros/s/AKfycbwtaIkKrGAlSkUjrWUc_nYgwS9Nd1LqClu9AsgZHD4BNDmsuxXdaWWVrGQVFpc8enOUEA/exec';
 	    const spinner = document.getElementById('vendorSpinner');
 		const vendorInput = document.getElementById('vendorId');
 		const vendorType = document.getElementById('vendorType');
+		const vendorName = document.getElementById('vendorName');
 
 			spinner.classList.remove('hidden');
   			vendorInput.value = '';
@@ -215,36 +216,63 @@
 		fetch(`${scriptUrl}?individualid=${encodeURIComponent(vendorPin)}`)
 			.then(res => res.json())
 			.then(data => {
-			  if (data.vendorId) {
-				vendorInput.value = data.neighborId;
-        		vendorInput.setCustomValidity(""); // Valid
-			  } else if (data.vendorType) {
-				if (data.vendorType === 'FARM') {
-					vendorType.value = 'Farmer';
-				} else if (data.vendorType === 'HOT') {
-					vendorType.value = 'Hot Food Vendor';
-				} else if (data.vendorType === 'VAP') {
-					vendorType.value = 'Value Added Producer';
-				} else if (data.vendorType === 'ENT') {
-					vendorType.value = 'Entertainer';
-				} else if (data.vendorType === 'EDU') {
-					vendorType.value = 'Educator';
-				} else if (data.vendorType === 'RETAIL') {
-					vendorType.value = 'Non-Food Retailer (Clothing, jewelry, etc)';
-				} else {
-					vendorType.value = 'Other';
+				if (data) {
+				  if (data.vendorId) {
+					vendorInput.value = data.neighborId;
+					vendorInput.setCustomValidity(""); // Valid
+				  } if (data.vendorType) {
+					if (data.vendorType === 'FARM') {
+						vendorType.value = 'Farmer';
+					} else if (data.vendorType === 'HOT') {
+						vendorType.value = 'Hot Food Vendor';
+					} else if (data.vendorType === 'VAP') {
+						vendorType.value = 'Value Added Producer';
+					} else if (data.vendorType === 'ENT') {
+						vendorType.value = 'Entertainer';
+					} else if (data.vendorType === 'EDU') {
+						vendorType.value = 'Educator';
+					} else if (data.vendorType === 'RETAIL') {
+						vendorType.value = 'Non-Food Retailer (Clothing, jewelry, etc)';
+					} else {
+						vendorType.value = 'Other';
+					}
+				  }	if (data.vendorName) {
+					vendorName.value = data.vendorName;
+				  }
+				}	else {
+					vendorInput.value = '';
+					vendorInput.setCustomValidity(vendorInput.getAttribute('data-error'));
+					vendorInput.reportValidity();
 				}
-			  }	else {
-				vendorInput.value = '';
-        		vendorInput.setCustomValidity(vendorInput.getAttribute('data-error'));
-        		vendorInput.reportValidity();
-			  }
 			})
 			.catch(err => console.error("Fetch error", err))
 			.finally(() => {
 				spinner.classList.add('hidden');
 			});
 	}
+	
+	function storeData(e) {
+		const form = document.getElementById("upcomingMarketForm");
+        const formData = new FormData(form);
+	
+		const selectedfoodItems = [];
+		const checkboxes = document.querySelectorAll('input[name="foodItems"]:checked');
+		const otherfoodItemInput = document.getElementById('otherFoodItem').value.trim();
+		checkboxes.forEach(cb => {
+		  if (cb.value === "Other") {
+			if (otherfoodItemInput) {
+			  selectedfoodItems.push(otherfoodItemInput); // Replace 'Other' with user input
+			}
+		  } else {
+			selectedfoodItems.push(cb.value);
+		  }
+		});
+		allFoodItems = selectedfoodItems.join(", "); // Combine selected values into a single string
+		
+		formData.set('foodItems', allFoodItems);
+		
+		sendData(formData);
+    }
 
   function addProduceItem() {
     const container = document.getElementById('produceContainer');
@@ -256,7 +284,7 @@
     card.innerHTML = `
       <div class="mb-2">
         <label class="block mb-1">Produce item you will be bringing to the market:</label>
-        <select class="w-full p-2 border rounded bg-white produce-name">
+        <select id="produceItem" name="produceItem" class="w-full p-2 border rounded bg-white produce-name">
           <option value="">- Select Crop -</option>
           ${options}
         </select>
@@ -264,7 +292,7 @@
       </div>
       <div class="mb-2">
         <label class="block mb-1">Produce Type</label>
-        <input type="text" class="w-full p-2 border rounded bg-white" />
+        <input type="text" id="produceType" name="produceType" class="w-full p-2 border rounded bg-white" />
       </div>
       <button type="button" class="text-red-500 text-sm mt-1" onclick="this.parentElement.remove()">Remove</button>
     `;
