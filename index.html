@@ -283,7 +283,11 @@
 			const produceType = card.querySelector('#produceType')?.value || '';
 			const cultureSpecific = card.querySelector('.produce-culture')?.value || '';
 			if (produceItem && produceType) {
-			  produceEntries.push({ produceItem, produceType, cultureSpecific });
+			  produceEntries.push({
+				name: produceItem,
+				type: produceType,
+				isCultural: cultureSpecific
+			  });
 			}
 		});
 
@@ -292,7 +296,7 @@
 			data[key] = value;
 		});
 
-		data.produceEntries = produceEntries;
+		data.produceItems = produceEntries;
 
 		sendData(data);
     }
