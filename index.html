@@ -78,7 +78,7 @@
       </div>
       <div class="mb-4">
         <label>Vendor Business Name</label>
-        <input type="text" id="vendorName" name="vendorName" class="w-full p-2 border rounded bg-white" />
+        <input type="text" id="vendorName" name="vendorName" class="w-full p-2 border rounded bg-white" readonly/>
 	      <input type="email" id="vendorEmail" name="vendorEmail" class="hidden" />
       </div>
       <div class="mb-4">
@@ -170,22 +170,22 @@
     "Blueberries", "Strawberry", "Onions", "Garlic", "Tomatillo"
   ])];
 
-  function getPortlandDate() {
-	const nowUTC = new Date();
-	const portlandTime = nowUTC.toLocaleString("en-US", { timeZone: "America/Los_Angeles" });
-	return new Date(portlandTime);
-  }
+  function getNextMarketDate() {
+  const timeZone = "America/Los_Angeles";  // Always use this for Portland
+  const today = new Date(Utilities.formatDate(new Date(), timeZone, "yyyy-MM-dd"));
 
-  function getNextMarketDate() {debugger;
-    const today = getPortlandDate();
-    const start = new Date("2025-06-22");
-    const end = new Date("2025-10-26");
-    while (start <= end) {
-      if (start > today) return start;
-      start.setDate(start.getDate() + 7);
-    }
-    return null;
+  const startString = "2025-06-22";
+  const endString = "2025-10-26";
+  let start = new Date(Utilities.formatDate(new Date(startString), timeZone, "yyyy-MM-dd"));
+  let end = new Date(Utilities.formatDate(new Date(endString), timeZone, "yyyy-MM-dd"));
+
+  while (start <= end) {
+    if (start > today) return start;
+    start.setDate(start.getDate() + 7);
   }
+  return null;
+}
+
 
   function formatDate(date) {
     return date.toLocaleDateString("en-US", { month: "long", day: "numeric" });
