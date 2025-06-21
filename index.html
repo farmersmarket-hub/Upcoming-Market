@@ -99,7 +99,7 @@
       </div>
       <div id="conditionalFields">
         <div id="produceSection" class="hidden mb-4">
-          <label>Produce Items</label>
+          <label>Produce Items <span class="text-red-500">*</span></label>
           <div id="produceContainer"></div>
           <button type="button" onclick="addProduceItem()" class="mt-2 text-sm bg-pink-500 text-white px-4 py-2 rounded-full hover:bg-pink-600">Add Produce</button>
         </div>
@@ -138,7 +138,7 @@
           </select>
         </div>
         <div class="mb-4">
-          <label>Estimated arrival time for set up</label>
+          <label>Estimated arrival time for set up <span class="text-red-500">*</span></label>
           <input type="time" id="arrivalTime" name="arrivalTime" step="900" class="w-full p-2 border rounded bg-white" />
           <p class="text-sm text-gray-600 mt-1">(Vendors are required to arrive and check-in between 11 and 12:45 on market day. Late arrivals may be asked to leave.)</p>
         </div>
@@ -171,17 +171,15 @@
   ])];
 
   function getNextMarketDate() {
-  const timeZone = "America/Los_Angeles";  // Always use this for Portland
-  const today = new Date(Utilities.formatDate(new Date(), timeZone, "yyyy-MM-dd"));
+  const today = new Date().toLocaleString('en-US', { timeZone: 'America/Los_Angeles' });
+  const start = new Date(2025, 5, 22); // June 22, 2025 (Month is 0-indexed)
+  const end = new Date(2025, 9, 26);   // October 26, 2025
 
-  const startString = "2025-06-22";
-  const endString = "2025-10-26";
-  let start = new Date(Utilities.formatDate(new Date(startString), timeZone, "yyyy-MM-dd"));
-  let end = new Date(Utilities.formatDate(new Date(endString), timeZone, "yyyy-MM-dd"));
+  const current = new Date(start); // avoid mutating start directly
 
-  while (start <= end) {
-    if (start > today) return start;
-    start.setDate(start.getDate() + 7);
+  while (current <= end) {
+    if (current > today) return current;
+    current.setDate(current.getDate() + 7);
   }
   return null;
 }
@@ -352,7 +350,7 @@
 
     card.innerHTML = `
       <div class="mb-2">
-        <label class="block mb-1">Produce item you will be bringing to the market:</label>
+        <label class="block mb-1">Produce item you will be bringing to the market: <span class="text-red-500">*</span></label>
         <select id="produceItem" name="produceItem" class="w-full p-2 border rounded bg-white produce-name">
           <option value="">- Select Crop -</option>
           ${options}
