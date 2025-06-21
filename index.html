@@ -176,7 +176,7 @@
 	return new Date(portlandTime);
   }
 
-  function getNextMarketDate() {
+  function getNextMarketDate() {debugger;
     const today = getPortlandDate();
     const start = new Date("2025-06-22");
     const end = new Date("2025-10-26");
@@ -326,7 +326,7 @@
 		document.getElementById("upcomingMarketForm").reset();
 		window.scrollTo({ top: 0, behavior: 'smooth' });
 
-		fetch('https://script.google.com/macros/s/AKfycbyVQ-2j4d0i48F2mqQ0VmED84K_ATYQXkRdMxOMReRIJq9gFhc5WqjdW4uHWWJQ7sk/exec', {
+		fetch('https://script.google.com/macros/s/AKfycbxLXdprdTjZv022xFwvA5ZNUFntAco-USDF6MyvwkVCiC-6Xno_YT-rprdVOppCoeNv/exec', {
 		  method: 'POST',
 		  headers: {
 			'Content-Type': 'text/plain;charset=utf-8',
