@@ -75,6 +75,7 @@
       <div class="mb-4">
         <label>Vendor Business Name</label>
         <input type="text" id="vendorName" name="vendorName" class="w-full p-2 border rounded bg-white" />
+	      <input type="email" id="vendorEmail" name="vendorEmail" class="hidden" />
       </div>
       <div class="mb-4">
         <label>Vendor Type</label>
@@ -210,6 +211,7 @@
 		const vendorInput = document.getElementById('vendorId');
 		const vendorType = document.getElementById('vendorType');
 		const vendorName = document.getElementById('vendorName');
+		const vendorEmail = document.getElementById('vendorEmail');
 
 			spinner.classList.remove('hidden');
   			vendorInput.value = '';
@@ -242,6 +244,8 @@
 					toggleProduceFields();
 				  }	if (data.vendorName) {
 					vendorName.value = data.vendorName;
+				  } if (data.vendorEmail) {
+					vendorEmail.value = data.vendorEmail;
 				  }
 				}	else {
 					vendorInput.value = '';
